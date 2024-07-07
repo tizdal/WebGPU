@@ -1,0 +1,26 @@
+version: '3'
+services:
+  pixie:
+    container_name: pixie-node
+    image: pixie-node
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.node
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+  cpu_benchmark:
+    container_name: pixie-benchmark
+    image: pixie-benchmark
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.benchmark
+    privileged: true
+    volumes:
+      - ./python_socket:/app
+    ports:
+      - "3001:3001"
+
+    
+
