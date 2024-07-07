@@ -1,0 +1,20 @@
+# Use a Node.js base image
+FROM node:latest
+
+# Set the working directory
+WORKDIR /app
+
+# Copy your application files to the container
+COPY . .
+
+# Install supervisor
+RUN apt-get update && apt-get install -y supervisor htop
+
+# Create a configuration file for supervisor
+RUN echo "[program:build]\ncommand=npm run build\nautorestart=true\n\n[program:start]\ncommand=npm start\nautorestart=true\n\n[program:serve]\ncommand=npm run serve\nautorestart=true" > /etc/supervisor/conf.d/my_programs.conf
+
+# Expose any necessary ports
+EXPOSE 3000
+
+# Run supervisor when the container starts
+CMD ["supervisord", "-n"]

@@ -1,0 +1,9 @@
+FROM python
+
+ADD ./python_socket /app
+
+RUN pip install tqdm psutil
+
+EXPOSE 3001
+
+CMD ["python3", "/app/CPUmoniroring.py"]
